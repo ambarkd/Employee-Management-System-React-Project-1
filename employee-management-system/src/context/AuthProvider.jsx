@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getLocalStorage, setLocalStorage } from "../utils/LocalStorage";
 
-const AuthContext = ({ children }) => {
+const AuthProvider = ({ children }) => {
   useEffect(() => {
     setLocalStorage();
     getLocalStorage();
@@ -9,4 +9,4 @@ const AuthContext = ({ children }) => {
   return <div>{children}</div>;
 };
 
-export default AuthContext;
+export default AuthProvider;
