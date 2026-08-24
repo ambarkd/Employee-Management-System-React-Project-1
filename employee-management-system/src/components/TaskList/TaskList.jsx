@@ -1,125 +1,118 @@
-import { useRef } from "react";
+const TaskList = ({ loggedInUserData }) => {
+  const getTaskStyles = (task) => {
+    if (task.failed) {
+      return {
+        border: "border-red-500/30",
+        background: "from-red-500/10",
+        hover: "hover:border-red-500/50",
+        date: "text-red-400/80",
+      };
+    }
 
-const TaskList = () => {
-  const scrollRef = useRef(null);
+    if (task.completed) {
+      return {
+        border: "border-emerald-500/30",
+        background: "from-emerald-500/10",
+        hover: "hover:border-emerald-500/50",
+        date: "text-emerald-400/80",
+      };
+    }
+
+    if (task.newTask) {
+      return {
+        border: "border-purple-500/30",
+        background: "from-purple-500/10",
+        hover: "hover:border-purple-500/50",
+        date: "text-purple-400/80",
+      };
+    }
+
+    return {
+      border: "border-amber-500/30",
+      background: "from-amber-500/10",
+      hover: "hover:border-amber-500/50",
+      date: "text-amber-400/80",
+    };
+  };
+
+  const getStatusLabel = (task) => {
+    if (task.failed) return "Failed";
+    if (task.completed) return "Completed";
+    if (task.newTask) return "New Task";
+    if (task.active) return "Active";
+
+    return "Task";
+  };
 
   return (
     <div className="mt-8 flex flex-col">
-      {/* Scrollable Container with Padding to prevent edge clipping */}
-      <div
-        ref={scrollRef}
-        className="flex max-h-[500px] w-full flex-wrap gap-5 overflow-y-auto px-1 py-2 [scrollbar-width:thin] [scrollbar-color:#3f3f46_transparent]"
-      >
-        {/* Task Card Item */}
-        <div className="flex h-[280px] w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex-shrink-0 flex-col justify-between rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/50">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="rounded-md border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-400">
-                High
-              </span>
-              <span className="text-xs font-medium text-amber-400/80">
-                20 Feb 2026
-              </span>
-            </div>
-            <h3 className="mt-5 text-xl font-bold text-zinc-100">
-              Make a youtube Video
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-              sit veniam dicta nam perspiciatis ipsum autem, ducimus
-              voluptatibus eaque illum explicabo. Iusto mollitia velit itaque
-              facilis ullam iste rem odit.
-            </p>
-          </div>
-        </div>
+      <div className="flex max-h-125 w-full flex-wrap gap-5 overflow-y-auto px-1 py-2 scrollbar-thin [scrollbar-color:#3f3f46_transparent]">
+        {loggedInUserData.tasks.map((task, index) => {
+          const styles = getTaskStyles(task);
 
-        <div className="flex h-[280px] w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex-shrink-0 flex-col justify-between rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/50">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="rounded-md border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-400">
-                High
-              </span>
-              <span className="text-xs font-medium text-emerald-400/80">
-                20 Feb 2026
-              </span>
-            </div>
-            <h3 className="mt-5 text-xl font-bold text-zinc-100">
-              Make a youtube Video
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-              sit veniam dicta nam perspiciatis ipsum autem, ducimus
-              voluptatibus eaque illum explicabo. Iusto mollitia velit itaque
-              facilis ullam iste rem odit.
-            </p>
-          </div>
-        </div>
+          return (
+            <div
+              key={index}
+              className={`flex h-70 w-full shrink-0 flex-col justify-between rounded-2xl border bg-linear-to-b via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] ${styles.border} ${styles.background} ${styles.hover}`}
+            >
+              <div>
+                <div className="flex items-center justify-between gap-3">
+                  <span
+                    className={`rounded-md border px-3 py-1 text-xs font-semibold ${
+                      task.failed
+                        ? "border-red-500/40 bg-red-500/20 text-red-400"
+                        : task.completed
+                          ? "border-emerald-500/40 bg-emerald-500/20 text-emerald-400"
+                          : task.newTask
+                            ? "border-purple-500/40 bg-purple-500/20 text-purple-400"
+                            : "border-amber-500/40 bg-amber-500/20 text-amber-400"
+                    }`}
+                  >
+                    {task.category}
+                  </span>
 
-        <div className="flex h-[280px] w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex-shrink-0 flex-col justify-between rounded-2xl border border-red-500/30 bg-gradient-to-b from-red-500/10 via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-red-500/50">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="rounded-md border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-400">
-                High
-              </span>
-              <span className="text-xs font-medium text-red-400/80">
-                20 Feb 2026
-              </span>
-            </div>
-            <h3 className="mt-5 text-xl font-bold text-zinc-100">
-              Make a youtube Video
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-              sit veniam dicta nam perspiciatis ipsum autem, ducimus
-              voluptatibus eaque illum explicabo. Iusto mollitia velit itaque
-              facilis ullam iste rem odit.
-            </p>
-          </div>
-        </div>
+                  <span className={`text-xs font-medium ${styles.date}`}>
+                    {task.taskDate}
+                  </span>
+                </div>
 
-        <div className="flex h-[280px] w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex-shrink-0 flex-col justify-between rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-purple-500/50">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="rounded-md border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-400">
-                High
-              </span>
-              <span className="text-xs font-medium text-purple-400/80">
-                20 Feb 2026
-              </span>
-            </div>
-            <h3 className="mt-5 text-xl font-bold text-zinc-100">
-              Make a youtube Video
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-              sit veniam dicta nam perspiciatis ipsum autem, ducimus
-              voluptatibus eaque illum explicabo. Iusto mollitia velit itaque
-              facilis ullam iste rem odit.
-            </p>
-          </div>
-        </div>
+                <h3 className="mt-5 text-xl font-bold text-zinc-100">
+                  {task.taskTitle}
+                </h3>
 
-        <div className="flex h-[280px] w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex-shrink-0 flex-col justify-between rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/50">
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="rounded-md border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-semibold text-red-400">
-                High
-              </span>
-              <span className="text-xs font-medium text-amber-400/80">
-                20 Feb 2026
-              </span>
+                <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-zinc-400">
+                  {task.taskDescription}
+                </p>
+              </div>
+
+              {/* Buttons only for active/new tasks */}
+              {(task.active || task.newTask) && (
+                <div className="mt-5 flex gap-3">
+                  <button className="flex-1 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500 hover:text-white">
+                    Failed
+                  </button>
+
+                  <button className="flex-1 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500 hover:text-white">
+                    Completed
+                  </button>
+                </div>
+              )}
+
+              {/* Status for completed/failed tasks */}
+              {task.completed && (
+                <div className="mt-5 text-sm font-medium text-emerald-400">
+                  ✓ Task Completed
+                </div>
+              )}
+
+              {task.failed && (
+                <div className="mt-5 text-sm font-medium text-red-400">
+                  ✕ Task Failed
+                </div>
+              )}
             </div>
-            <h3 className="mt-5 text-xl font-bold text-zinc-100">
-              Make a youtube Video
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
-              sit veniam dicta nam perspiciatis ipsum autem, ducimus
-              voluptatibus eaque illum explicabo. Iusto mollitia velit itaque
-              facilis ullam iste rem odit.
-            </p>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );
