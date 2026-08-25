@@ -29,9 +29,7 @@ const TaskListNumbers = ({ loggedInUserData }) => {
         <h2 className="text-4xl font-extrabold text-purple-400">
           {loggedInUserData.taskCounts.newTask}
         </h2>
-        <h3 className="mt-2 text-base font-semibold text-zinc-200">
-          Accepted Task
-        </h3>
+        <h3 className="mt-2 text-base font-semibold text-zinc-200">New Task</h3>
       </div>
 
       {/* Failed Task */}

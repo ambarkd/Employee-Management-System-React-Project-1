@@ -3,7 +3,7 @@ const TaskList = ({ loggedInUserData }) => {
     if (task.failed) {
       return {
         border: "border-red-500/30",
-        background: "from-red-500/10",
+        background: "bg-red-500/5",
         hover: "hover:border-red-500/50",
         date: "text-red-400/80",
       };
@@ -12,7 +12,7 @@ const TaskList = ({ loggedInUserData }) => {
     if (task.completed) {
       return {
         border: "border-emerald-500/30",
-        background: "from-emerald-500/10",
+        background: "bg-emerald-500/5",
         hover: "hover:border-emerald-500/50",
         date: "text-emerald-400/80",
       };
@@ -21,7 +21,7 @@ const TaskList = ({ loggedInUserData }) => {
     if (task.newTask) {
       return {
         border: "border-purple-500/30",
-        background: "from-purple-500/10",
+        background: "bg-purple-500/5",
         hover: "hover:border-purple-500/50",
         date: "text-purple-400/80",
       };
@@ -29,92 +29,187 @@ const TaskList = ({ loggedInUserData }) => {
 
     return {
       border: "border-amber-500/30",
-      background: "from-amber-500/10",
+      background: "bg-amber-500/5",
       hover: "hover:border-amber-500/50",
       date: "text-amber-400/80",
     };
   };
 
-  const getStatusLabel = (task) => {
-    if (task.failed) return "Failed";
-    if (task.completed) return "Completed";
-    if (task.newTask) return "New Task";
-    if (task.active) return "Active";
+  const getPriorityStyles = (priority) => {
+    switch (priority) {
+      case "High":
+        return "border-red-500/30 bg-red-500/10 text-red-400";
 
-    return "Task";
+      case "Medium":
+        return "border-amber-500/30 bg-amber-500/10 text-amber-400";
+
+      case "Low":
+        return "border-sky-500/30 bg-sky-500/10 text-sky-400";
+
+      default:
+        return "border-zinc-700 bg-zinc-800 text-zinc-400";
+    }
   };
 
   return (
-    <div className="mt-8 flex flex-col">
-      <div className="flex max-h-125 w-full flex-wrap gap-5 overflow-y-auto px-1 py-2 scrollbar-thin [scrollbar-color:#3f3f46_transparent]">
-        {loggedInUserData.tasks.map((task, index) => {
+    <section className="mt-8">
+      {/* Section Heading */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-100">
+          Assigned Tasks
+        </h2>
+
+        <p className="mt-1 text-sm text-zinc-400">
+          Track your assigned tasks and monitor their current progress.
+        </p>
+      </div>
+
+      {/* Task Grid */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {loggedInUserData?.tasks?.map((task, index) => {
           const styles = getTaskStyles(task);
+
+          // Hide priority for completed and failed tasks
+          const showPriority = !task.completed && !task.failed;
 
           return (
             <div
               key={index}
-              className={`flex h-70 w-full shrink-0 flex-col justify-between rounded-2xl border bg-linear-to-b via-zinc-900 to-zinc-900 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] ${styles.border} ${styles.background} ${styles.hover}`}
+              className={`flex flex-col rounded-2xl border bg-zinc-900/90 p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 ${styles.border} ${styles.background} ${styles.hover}`}
             >
-              <div>
+              {/* Main Content */}
+              <div className="flex flex-1 flex-col">
+                {/* Priority & Date */}
                 <div className="flex items-center justify-between gap-3">
-                  <span
-                    className={`rounded-md border px-3 py-1 text-xs font-semibold ${
-                      task.failed
-                        ? "border-red-500/40 bg-red-500/20 text-red-400"
-                        : task.completed
-                          ? "border-emerald-500/40 bg-emerald-500/20 text-emerald-400"
-                          : task.newTask
-                            ? "border-purple-500/40 bg-purple-500/20 text-purple-400"
-                            : "border-amber-500/40 bg-amber-500/20 text-amber-400"
-                    }`}
-                  >
-                    {task.category}
-                  </span>
+                  {showPriority ? (
+                    <span
+                      className={`rounded-md border px-3 py-1 text-xs font-semibold ${getPriorityStyles(
+                        task.priority,
+                      )}`}
+                    >
+                      {task.priority} Priority
+                    </span>
+                  ) : (
+                    <span />
+                  )}
 
                   <span className={`text-xs font-medium ${styles.date}`}>
                     {task.taskDate}
                   </span>
                 </div>
 
-                <h3 className="mt-5 text-xl font-bold text-zinc-100">
+                {/* Task Title */}
+                <h3 className="mt-4 text-xl font-bold text-zinc-100">
                   {task.taskTitle}
                 </h3>
 
-                <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-zinc-400">
-                  {task.taskDescription}
-                </p>
+                {/* Task Description */}
+                <div className="task-description-scroll mt-3  max-h-30 overflow-y-auto pr-2">
+                  <p className="text-sm leading-relaxed text-zinc-400">
+                    {task.taskDescription}
+                  </p>
+                </div>
+
+                {/* Category + Get Started */}
+                <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+                  <div className="flex min-w-0 items-center gap-2 text-sm">
+                    <span className="shrink-0 font-medium text-zinc-300">
+                      Category:
+                    </span>
+
+                    <span className="truncate rounded-md border border-zinc-700 bg-zinc-800/80 px-2.5 py-1 text-xs font-medium text-zinc-400">
+                      {task.category}
+                    </span>
+                  </div>
+
+                  {/* New Task Action */}
+                  {task.newTask && (
+                    <button className="shrink-0 cursor-pointer text-xs font-medium text-purple-400 transition hover:text-purple-300">
+                      Get Started →
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* Buttons only for active/new tasks */}
-              {(task.active || task.newTask) && (
-                <div className="mt-5 flex gap-3">
-                  <button className="flex-1 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500 hover:text-white">
-                    Failed
-                  </button>
+              {/* Actions & Status */}
+              <div className="mt-6 border-t border-zinc-800/80 pt-4">
+                {/* Active / New Task Actions */}
+                {(task.active || task.newTask) && (
+                  <div className="flex gap-2">
+                    <button className="flex-1 cursor-pointer rounded-lg border border-red-500/30 bg-red-500/10 px-1 py-2 text-[11px] font-medium text-red-400 transition hover:bg-red-500 hover:text-white sm:text-xs">
+                      Failed
+                    </button>
 
-                  <button className="flex-1 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400 transition hover:bg-emerald-500 hover:text-white">
-                    Completed
-                  </button>
-                </div>
-              )}
+                    <button className="flex-1 cursor-pointer rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-1 py-2 text-[11px] font-medium text-emerald-400 transition hover:bg-emerald-500 hover:text-white sm:text-xs">
+                      Complete
+                    </button>
 
-              {/* Status for completed/failed tasks */}
-              {task.completed && (
-                <div className="mt-5 text-sm font-medium text-emerald-400">
-                  ✓ Task Completed
-                </div>
-              )}
+                    <button className="flex-1 cursor-pointer rounded-lg border border-sky-500/30 bg-sky-500/10 px-1 py-2 text-[11px] font-medium text-sky-400 transition hover:bg-sky-500 hover:text-white sm:text-xs">
+                      Note
+                    </button>
+                  </div>
+                )}
 
-              {task.failed && (
-                <div className="mt-5 text-sm font-medium text-red-400">
-                  ✕ Task Failed
-                </div>
-              )}
+                {/* Completed */}
+                {task.completed && (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
+                      <span>✓</span>
+                      Task Completed
+                    </div>
+
+                    <button className="cursor-pointer text-xs font-medium text-emerald-400 transition hover:text-emerald-300">
+                      See Note →
+                    </button>
+                  </div>
+                )}
+
+                {/* Failed */}
+                {task.failed && (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-red-400">
+                      <span>✕</span>
+                      Task Failed
+                    </div>
+
+                    <button className="cursor-pointer text-xs font-medium text-red-400 transition hover:text-red-300">
+                      See Note →
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
-    </div>
+
+      {/* Description Scrollbar */}
+      <style>
+        {`
+          .task-description-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #52525b transparent;
+          }
+
+          .task-description-scroll::-webkit-scrollbar {
+            width: 4px;
+          }
+
+          .task-description-scroll::-webkit-scrollbar-track {
+            background: transparent;
+          }
+
+          .task-description-scroll::-webkit-scrollbar-thumb {
+            background: #52525b;
+            border-radius: 9999px;
+          }
+
+          .task-description-scroll::-webkit-scrollbar-thumb:hover {
+            background: #71717a;
+          }
+        `}
+      </style>
+    </section>
   );
 };
 
