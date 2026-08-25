@@ -1,4 +1,4 @@
-const TaskList = ({ loggedInUserData }) => {
+const TaskList = ({ loggedInUserData, onTaskDetails }) => {
   const getTaskStyles = (task) => {
     if (task.failed) {
       return {
@@ -144,8 +144,11 @@ const TaskList = ({ loggedInUserData }) => {
                       Complete
                     </button>
 
-                    <button className="flex-1 cursor-pointer rounded-lg border border-sky-500/30 bg-sky-500/10 px-1 py-2 text-[11px] font-medium text-sky-400 transition hover:bg-sky-500 hover:text-white sm:text-xs">
-                      Note
+                    <button
+                      onClick={() => onTaskDetails(task)}
+                      className="flex-1 cursor-pointer rounded-lg border border-sky-500/30 bg-sky-500/10 px-1 py-2 text-[11px] font-medium text-sky-400 transition hover:bg-sky-500 hover:text-white sm:text-xs"
+                    >
+                      Details
                     </button>
                   </div>
                 )}
@@ -158,8 +161,11 @@ const TaskList = ({ loggedInUserData }) => {
                       Task Completed
                     </div>
 
-                    <button className="cursor-pointer text-xs font-medium text-emerald-400 transition hover:text-emerald-300">
-                      See Note →
+                    <button
+                      onClick={() => onTaskDetails(task)}
+                      className="cursor-pointer text-xs font-medium text-emerald-400 transition hover:text-emerald-300"
+                    >
+                      See Details →
                     </button>
                   </div>
                 )}
@@ -172,8 +178,11 @@ const TaskList = ({ loggedInUserData }) => {
                       Task Failed
                     </div>
 
-                    <button className="cursor-pointer text-xs font-medium text-red-400 transition hover:text-red-300">
-                      See Note →
+                    <button
+                      onClick={() => onTaskDetails(task)}
+                      className="cursor-pointer text-xs font-medium text-red-400 transition hover:text-red-300"
+                    >
+                      See Details →
                     </button>
                   </div>
                 )}
