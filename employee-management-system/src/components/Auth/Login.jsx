@@ -18,7 +18,7 @@ function Login({ handleLogin }) {
       {/* Login Card */}
       <div className="relative w-full max-w-md rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
         {/* Subtle Top Border Highlight */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
+        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-500/50 to-transparent"></div>
 
         <div className="mb-8 text-center">
           <h2 className="text-2xl font-bold tracking-tight text-zinc-100">

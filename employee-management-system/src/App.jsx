@@ -56,7 +56,11 @@ function App() {
 
   return (
     <>
-      <Header loggedInUserData={loggedInUserData} />
+      <Header
+        loggedInUserData={loggedInUserData}
+        setUser={setUser}
+        setLoggedInUserData={setLoggedInUserData}
+      />
       {!user ? <Login handleLogin={handleLogin} /> : ""}
       {user == "admin" ? (
         <AdminDashboard loggedInUserData={loggedInUserData} />

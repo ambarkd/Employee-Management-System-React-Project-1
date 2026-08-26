@@ -6,6 +6,9 @@ import TaskDetails from "../TaskList/TaskDetails";
 const EmployeeDashboard = ({ loggedInUserData }) => {
   const [selectedTask, setSelectedTask] = useState(null);
 
+  // null means show all tasks
+  const [taskFilter, setTaskFilter] = useState(null);
+
   const handleTaskDetails = (task) => {
     setSelectedTask(task);
   };
@@ -21,11 +24,16 @@ const EmployeeDashboard = ({ loggedInUserData }) => {
           <TaskDetails task={selectedTask} onBack={handleBackToTasks} />
         ) : (
           <>
-            <TaskListNumbers loggedInUserData={loggedInUserData} />
+            <TaskListNumbers
+              loggedInUserData={loggedInUserData}
+              taskFilter={taskFilter}
+              setTaskFilter={setTaskFilter}
+            />
 
             <TaskList
               loggedInUserData={loggedInUserData}
               onTaskDetails={handleTaskDetails}
+              taskFilter={taskFilter}
             />
           </>
         )}

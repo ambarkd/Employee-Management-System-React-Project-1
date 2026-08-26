@@ -2,6 +2,7 @@ const employees = [
   {
     id: 1,
     name: "Pallavi Dey",
+    username: "pallavidey",
     email: "pallavi@gmail.com",
     password: "123",
     role: "employee",
@@ -16,6 +17,7 @@ const employees = [
 
     tasks: [
       {
+        id: 101,
         active: true,
         newTask: false,
         completed: false,
@@ -26,8 +28,10 @@ const employees = [
         taskDate: "2026-08-26",
         category: "HR",
         priority: "Medium",
+        comments: [],
       },
       {
+        id: 102,
         active: false,
         newTask: true,
         completed: false,
@@ -38,8 +42,10 @@ const employees = [
         taskDate: "2026-08-25",
         category: "HR",
         priority: "High",
+        comments: [],
       },
       {
+        id: 103,
         active: false,
         newTask: false,
         completed: true,
@@ -50,6 +56,10 @@ const employees = [
         taskDate: "2026-08-20",
         category: "HR",
         priority: "Low",
+        comments: [
+          "Employee records have been updated and the required information has been verified.",
+          "All required employee information has been checked.",
+        ],
       },
     ],
   },
@@ -57,6 +67,7 @@ const employees = [
   {
     id: 2,
     name: "Priya Das",
+    username: "priyadas",
     email: "priya@gmail.com",
     password: "123",
     role: "employee",
@@ -71,6 +82,7 @@ const employees = [
 
     tasks: [
       {
+        id: 201,
         active: true,
         newTask: false,
         completed: false,
@@ -81,8 +93,10 @@ const employees = [
         taskDate: "2026-08-27",
         category: "Design",
         priority: "Medium",
+        comments: [],
       },
       {
+        id: 202,
         active: false,
         newTask: true,
         completed: false,
@@ -93,8 +107,10 @@ const employees = [
         taskDate: "2026-08-25",
         category: "Design",
         priority: "High",
+        comments: [],
       },
       {
+        id: 203,
         active: false,
         newTask: false,
         completed: true,
@@ -105,8 +121,13 @@ const employees = [
         taskDate: "2026-08-21",
         category: "Design",
         priority: "Low",
+        comments: [
+          "The responsive mobile designs are complete and ready for review.",
+          "All mobile layouts have been checked across different screen sizes.",
+        ],
       },
       {
+        id: 204,
         active: false,
         newTask: false,
         completed: false,
@@ -117,6 +138,10 @@ const employees = [
         taskDate: "2026-08-19",
         category: "Design",
         priority: "High",
+        comments: [
+          "The revisions could not be completed before the deadline due to additional client changes.",
+          "Waiting for the final client feedback before continuing the revisions.",
+        ],
       },
     ],
   },
@@ -124,6 +149,7 @@ const employees = [
   {
     id: 3,
     name: "Arjun Roy",
+    username: "arjunroy",
     email: "arjun@gmail.com",
     password: "123",
     role: "employee",
@@ -138,6 +164,7 @@ const employees = [
 
     tasks: [
       {
+        id: 301,
         active: true,
         newTask: false,
         completed: false,
@@ -148,8 +175,10 @@ const employees = [
         taskDate: "2026-08-26",
         category: "Management",
         priority: "Medium",
+        comments: [],
       },
       {
+        id: 302,
         active: false,
         newTask: true,
         completed: false,
@@ -160,8 +189,10 @@ const employees = [
         taskDate: "2026-08-25",
         category: "Meeting",
         priority: "High",
+        comments: [],
       },
       {
+        id: 303,
         active: false,
         newTask: false,
         completed: true,
@@ -171,8 +202,13 @@ const employees = [
         taskDate: "2026-08-20",
         category: "Management",
         priority: "Low",
+        comments: [
+          "The weekly project status report has been prepared and shared with the team.",
+          "The report includes the latest progress and pending project items.",
+        ],
       },
       {
+        id: 304,
         active: false,
         newTask: false,
         completed: false,
@@ -183,6 +219,10 @@ const employees = [
         taskDate: "2026-08-19",
         category: "Meeting",
         priority: "Medium",
+        comments: [
+          "The client was unavailable for the scheduled follow-up.",
+          "A new follow-up will be arranged after receiving the client's availability.",
+        ],
       },
     ],
   },
@@ -190,6 +230,7 @@ const employees = [
   {
     id: 4,
     name: "Sourav Sen",
+    username: "souravsen",
     email: "sourav.sen@gmail.com",
     password: "123",
     role: "employee",
@@ -204,6 +245,7 @@ const employees = [
 
     tasks: [
       {
+        id: 401,
         active: true,
         newTask: false,
         completed: false,
@@ -214,8 +256,10 @@ const employees = [
         taskDate: "2026-08-27",
         category: "Development",
         priority: "Medium",
+        comments: [],
       },
       {
+        id: 402,
         active: true,
         newTask: false,
         completed: false,
@@ -226,8 +270,10 @@ const employees = [
         taskDate: "2026-08-28",
         category: "Development",
         priority: "High",
+        comments: [],
       },
       {
+        id: 403,
         active: false,
         newTask: true,
         completed: false,
@@ -238,8 +284,10 @@ const employees = [
         taskDate: "2026-08-25",
         category: "Development",
         priority: "High",
+        comments: [],
       },
       {
+        id: 404,
         active: false,
         newTask: false,
         completed: true,
@@ -250,8 +298,13 @@ const employees = [
         taskDate: "2026-08-21",
         category: "Bug Fix",
         priority: "High",
+        comments: [
+          "The authentication issue has been fixed and employee login is working correctly.",
+          "Login was tested successfully after applying the fix.",
+        ],
       },
       {
+        id: 405,
         active: false,
         newTask: false,
         completed: false,
@@ -261,6 +314,10 @@ const employees = [
         taskDate: "2026-08-18",
         category: "Testing",
         priority: "Low",
+        comments: [
+          "Testing could not be completed because the latest build had unresolved issues.",
+          "The feature needs another build before testing can continue.",
+        ],
       },
     ],
   },
@@ -269,8 +326,9 @@ const employees = [
 const admin = [
   {
     id: 1,
-    name: "Subhas Chatterjee",
-    email: "adminsubhas@gmail.com",
+    name: "Ambar Dhara",
+    username: "ambaradmin",
+    email: "ambaradmin@gmail.com",
     password: "123",
     role: "admin",
     designation: "Administrator",

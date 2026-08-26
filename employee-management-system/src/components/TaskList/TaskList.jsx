@@ -1,4 +1,4 @@
-const TaskList = ({ loggedInUserData, onTaskDetails }) => {
+const TaskList = ({ loggedInUserData, onTaskDetails, taskFilter }) => {
   const getTaskStyles = (task) => {
     if (task.failed) {
       return {
@@ -51,12 +51,41 @@ const TaskList = ({ loggedInUserData, onTaskDetails }) => {
     }
   };
 
+  // Filter tasks
+  const filteredTasks = loggedInUserData?.tasks?.filter((task) => {
+    if (!taskFilter) {
+      return true;
+    }
+
+    return task[taskFilter];
+  });
+
+  // Heading
+  const getTaskHeading = () => {
+    switch (taskFilter) {
+      case "active":
+        return "Assigned Tasks (Active Task)";
+
+      case "completed":
+        return "Assigned Tasks (Completed Task)";
+
+      case "newTask":
+        return "Assigned Tasks (New Task)";
+
+      case "failed":
+        return "Assigned Tasks (Failed Task)";
+
+      default:
+        return "Assigned Tasks";
+    }
+  };
+
   return (
     <section className="mt-8">
       {/* Section Heading */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold tracking-tight text-zinc-100">
-          Assigned Tasks
+          {getTaskHeading()}
         </h2>
 
         <p className="mt-1 text-sm text-zinc-400">
@@ -66,7 +95,7 @@ const TaskList = ({ loggedInUserData, onTaskDetails }) => {
 
       {/* Task Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {loggedInUserData?.tasks?.map((task, index) => {
+        {filteredTasks?.map((task, index) => {
           const styles = getTaskStyles(task);
 
           // Hide priority for completed and failed tasks
@@ -104,13 +133,13 @@ const TaskList = ({ loggedInUserData, onTaskDetails }) => {
                 </h3>
 
                 {/* Task Description */}
-                <div className="task-description-scroll mt-3  max-h-30 overflow-y-auto pr-2">
+                <div className="task-description-scroll mt-3 max-h-30 overflow-y-auto pr-2">
                   <p className="text-sm leading-relaxed text-zinc-400">
                     {task.taskDescription}
                   </p>
                 </div>
 
-                {/* Category + Get Started */}
+                {/* Category */}
                 <div className="mt-auto flex items-center justify-between gap-3 pt-4">
                   <div className="flex min-w-0 items-center gap-2 text-sm">
                     <span className="shrink-0 font-medium text-zinc-300">
@@ -121,13 +150,6 @@ const TaskList = ({ loggedInUserData, onTaskDetails }) => {
                       {task.category}
                     </span>
                   </div>
-
-                  {/* New Task Action */}
-                  {task.newTask && (
-                    <button className="shrink-0 cursor-pointer text-xs font-medium text-purple-400 transition hover:text-purple-300">
-                      Get Started →
-                    </button>
-                  )}
                 </div>
               </div>
 
@@ -191,6 +213,15 @@ const TaskList = ({ loggedInUserData, onTaskDetails }) => {
           );
         })}
       </div>
+
+      {/* No Tasks */}
+      {filteredTasks?.length === 0 && (
+        <div className="rounded-2xl border border-dashed border-zinc-800 bg-zinc-900/40 p-10 text-center">
+          <p className="text-sm text-zinc-500">
+            No tasks found for this filter.
+          </p>
+        </div>
+      )}
 
       {/* Description Scrollbar */}
       <style>
