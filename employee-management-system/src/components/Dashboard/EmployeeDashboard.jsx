@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TaskListNumbers from "../TaskList/TaskListNumbers";
-import TaskList from "../TaskList/TaskList";
+import TaskList from "../TaskList/TaskList/TaskList";
 import TaskDetails from "../TaskList/TaskDetails/TaskDetails";
 
 const EmployeeDashboard = ({
