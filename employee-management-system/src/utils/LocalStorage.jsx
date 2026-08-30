@@ -346,3 +346,10 @@ export const getLocalStorage = () => {
 
   return { employees, admin };
 };
+
+export const resetLocalStorage = () => {
+  localStorage.removeItem("employees");
+  localStorage.removeItem("admin");
+
+  setLocalStorage();
+};

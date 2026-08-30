@@ -1,4 +1,9 @@
-const TaskList = ({ loggedInUserData, onTaskDetails, taskFilter }) => {
+const TaskList = ({
+  loggedInUserData,
+  onTaskDetails,
+  taskFilter,
+  onTaskStatus,
+}) => {
   const getTaskStyles = (task) => {
     if (task.failed) {
       return {
@@ -158,11 +163,17 @@ const TaskList = ({ loggedInUserData, onTaskDetails, taskFilter }) => {
                 {/* Active / New Task Actions */}
                 {(task.active || task.newTask) && (
                   <div className="flex gap-2">
-                    <button className="flex-1 cursor-pointer rounded-lg border border-red-500/30 bg-red-500/10 px-1 py-2 text-[11px] font-medium text-red-400 transition hover:bg-red-500 hover:text-white sm:text-xs">
+                    <button
+                      onClick={() => onTaskStatus(task.id, "failed")}
+                      className="flex-1 cursor-pointer rounded-lg border border-red-500/30 bg-red-500/10 px-1 py-2 text-[11px] font-medium text-red-400 transition hover:bg-red-500 hover:text-white sm:text-xs"
+                    >
                       Failed
                     </button>
 
-                    <button className="flex-1 cursor-pointer rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-1 py-2 text-[11px] font-medium text-emerald-400 transition hover:bg-emerald-500 hover:text-white sm:text-xs">
+                    <button
+                      onClick={() => onTaskStatus(task.id, "completed")}
+                      className="flex-1 cursor-pointer rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-1 py-2 text-[11px] font-medium text-emerald-400 transition hover:bg-emerald-500 hover:text-white sm:text-xs"
+                    >
                       Complete
                     </button>
 

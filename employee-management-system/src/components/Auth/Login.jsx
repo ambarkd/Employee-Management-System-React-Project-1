@@ -24,6 +24,7 @@ function Login({ handleLogin }) {
           <h2 className="text-2xl font-bold tracking-tight text-zinc-100">
             Welcome Back
           </h2>
+
           <p className="mt-2 text-xs text-zinc-400">
             Please enter your credentials to log in
           </p>
