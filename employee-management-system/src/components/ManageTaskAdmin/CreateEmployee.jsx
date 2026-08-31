@@ -1,6 +1,7 @@
-const CreateTask = () => {
+const CreateEmployee = ({ loggedInUserData }) => {
   return (
-    <>
+    <div>
+      {" "}
       <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
         <h2 className="mb-6 text-xl font-semibold text-zinc-100">
           Create New Task
@@ -26,7 +27,7 @@ const CreateTask = () => {
               </h3>
               <input
                 type="date"
-                className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 [color-scheme:dark]"
+                className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 scheme-dark"
               />
             </div>
 
@@ -61,7 +62,7 @@ const CreateTask = () => {
               </h3>
               <textarea
                 placeholder="Provide detailed instructions..."
-                className="w-full flex-1 min-h-[180px] resize-none rounded-xl border border-zinc-700/80 bg-zinc-800/50 p-4 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
+                className="w-full flex-1 min-h-45 resize-none rounded-xl border border-zinc-700/80 bg-zinc-800/50 p-4 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
               ></textarea>
             </div>
 
@@ -76,8 +77,8 @@ const CreateTask = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
-export default CreateTask;
+export default CreateEmployee;

@@ -9,10 +9,13 @@ const TaskDetails = ({
   onTaskStatus,
   onAddComment,
   onDeleteComment,
+  userType = "employee",
 }) => {
+  const isAdmin = userType === "admin";
+
   return (
     <section className="mt-8">
-      {/* Back to Task List */}
+      {/* Back Button */}
       <button
         onClick={onBack}
         className="group mb-6 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm font-medium text-zinc-300 shadow-sm transition-all duration-200 hover:border-zinc-600 hover:bg-zinc-800 hover:text-zinc-100 active:scale-[0.98]"
@@ -21,7 +24,7 @@ const TaskDetails = ({
           ←
         </span>
 
-        <span>Back to Task List</span>
+        <span>{isAdmin ? "Back to Admin Board" : "Back to Task List"}</span>
       </button>
 
       {/* Header */}
@@ -43,7 +46,8 @@ const TaskDetails = ({
 
         <TaskInfo task={task} />
 
-        <TaskActions task={task} onTaskStatus={onTaskStatus} />
+        {/* Only Employee can modify task */}
+        {!isAdmin && <TaskActions task={task} onTaskStatus={onTaskStatus} />}
 
         <TaskComments
           task={task}
