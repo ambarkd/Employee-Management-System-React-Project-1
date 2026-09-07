@@ -64,7 +64,7 @@ const FooterAppInfo = () => {
               key={employee.email}
               className="rounded-xl border border-zinc-700 bg-zinc-800/80 px-4 py-3"
             >
-              <div className="mb-2 flex items-center justify-between">
+              <div className="mb-2 flex items-center justify-between gap-2">
                 <p className="text-sm font-semibold text-zinc-200">
                   {employee.name}
                 </p>
@@ -87,7 +87,7 @@ const FooterAppInfo = () => {
 
           {/* Admin */}
           <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 px-4 py-3">
-            <div className="mb-2 flex items-center justify-between">
+            <div className="mb-2 flex items-center justify-between gap-2">
               <p className="text-sm font-semibold text-purple-300">Admin</p>
 
               <span className="rounded-md bg-purple-500/20 px-2 py-1 text-[11px] font-medium text-purple-300">
@@ -106,13 +106,23 @@ const FooterAppInfo = () => {
           </div>
         </div>
 
-        {/* Usernames */}
-        <div className="mt-4 text-center text-xs text-zinc-500">
-          Employee username:{" "}
-          <span className="font-medium text-zinc-300">souravsen</span>
-          <span className="mx-2 text-zinc-700">•</span>
-          Admin username:{" "}
-          <span className="font-medium text-zinc-300">ambaradmin</span>
+        {/* Bottom Information */}
+        <div className="mt-4 flex flex-col items-center justify-between gap-3 border-t border-zinc-800 pt-4 sm:flex-row">
+          <p className="text-xs text-zinc-500">
+            Admin username:{" "}
+            <span className="font-medium text-zinc-300">ambaradmin</span>
+          </p>
+
+          {/* Architecture PDF */}
+          <a
+            href="/Employee-Management-System-Architecture.pdf"
+            download
+            className="inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3 py-2 text-xs font-semibold text-cyan-400 transition duration-200 hover:border-cyan-400/50 hover:bg-cyan-500/20 hover:text-cyan-300 active:scale-[0.98]"
+          >
+            <span>📄</span>
+            <span>Download Architecture PDF</span>
+            <span>↓</span>
+          </a>
         </div>
       </div>
     </footer>
