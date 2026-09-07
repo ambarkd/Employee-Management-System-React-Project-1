@@ -88,6 +88,7 @@ const CreateEmployee = () => {
 
           <input
             type="text"
+            required
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -105,6 +106,7 @@ const CreateEmployee = () => {
           <input
             type="text"
             name="username"
+            required
             value={formData.username}
             onChange={handleChange}
             placeholder="arjunroy"
@@ -121,6 +123,7 @@ const CreateEmployee = () => {
           <input
             type="email"
             name="email"
+            required
             value={formData.email}
             onChange={handleChange}
             placeholder="arjun@gmail.com"
@@ -137,6 +140,7 @@ const CreateEmployee = () => {
           <input
             type="password"
             name="password"
+            required
             value={formData.password}
             onChange={handleChange}
             placeholder="123"
@@ -155,6 +159,7 @@ const CreateEmployee = () => {
             name="designation"
             value={formData.designation}
             onChange={handleChange}
+            required
             placeholder="Frontend Developer"
             className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
           />

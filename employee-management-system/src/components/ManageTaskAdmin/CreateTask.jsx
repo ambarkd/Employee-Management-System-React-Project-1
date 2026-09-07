@@ -134,6 +134,7 @@ const CreateTask = () => {
               name="taskTitle"
               value={formData.taskTitle}
               onChange={handleChange}
+              required
               placeholder="Make a UI Design"
               className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
             />
@@ -148,6 +149,7 @@ const CreateTask = () => {
             <input
               type="date"
               name="taskDate"
+              required
               value={formData.taskDate}
               onChange={handleChange}
               className="scheme-dark w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
@@ -164,6 +166,7 @@ const CreateTask = () => {
               name="employeeId"
               value={formData.employeeId}
               onChange={handleChange}
+              required
               className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
             >
               <option value="">Select Employee</option>
@@ -187,6 +190,7 @@ const CreateTask = () => {
               name="category"
               value={formData.category}
               onChange={handleChange}
+              required
               placeholder="Design, Development, Testing..."
               className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
             />
@@ -202,6 +206,7 @@ const CreateTask = () => {
               name="priority"
               value={formData.priority}
               onChange={handleChange}
+              required
               className="w-full rounded-xl border border-zinc-700/80 bg-zinc-800/50 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
             >
               <option value="High">High</option>
@@ -223,6 +228,7 @@ const CreateTask = () => {
               name="taskDescription"
               value={formData.taskDescription}
               onChange={handleChange}
+              required
               placeholder="Provide detailed instructions..."
               className="min-h-45 w-full flex-1 resize-none rounded-xl border border-zinc-700/80 bg-zinc-800/50 p-4 text-sm text-zinc-100 placeholder-zinc-500 outline-none transition duration-200 focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400"
             />

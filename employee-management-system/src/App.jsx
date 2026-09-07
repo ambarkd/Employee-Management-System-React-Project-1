@@ -1,7 +1,13 @@
 import "./App.css";
 
 import { useContext, useEffect, useState } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
@@ -10,6 +16,7 @@ import Header from "./components/layout/Header";
 import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
 import AdminProfile from "./components/AdminProfile/AdminProfile";
 import AllTabs from "./components/ManageTaskAdmin/AllTabs";
+import NotFound from "./components/NotFound/NotFound";
 
 import { Toaster, toast } from "sonner";
 
@@ -33,6 +40,7 @@ import {
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [user, setUser] = useState(null);
   const [loggedInUserData, setLoggedInUserData] = useState(null);
@@ -40,10 +48,7 @@ function App() {
 
   const authData = useContext(AuthContext);
 
-  // =========================================
   // Restore logged-in user after page refresh
-  // =========================================
-
   useEffect(() => {
     if (!authData) return;
 
@@ -57,10 +62,7 @@ function App() {
     setIsLoading(false);
   }, [authData]);
 
-  // =========================================
   // Login
-  // =========================================
-
   const handleLogin = (email, password) => {
     if (!authData) return;
 
@@ -85,10 +87,7 @@ function App() {
     }, 1000);
   };
 
-  // =========================================
   // Employee - Update Task Status
-  // =========================================
-
   const handleTaskStatus = (taskId, status) => {
     if (!loggedInUserData) return;
 
@@ -101,10 +100,7 @@ function App() {
     updateEmployeeInLocalStorage(updatedEmployee);
   };
 
-  // =========================================
   // Employee - Add Comment
-  // =========================================
-
   const handleAddComment = (taskId, comment) => {
     const updatedEmployee = handleEmployeeAddComment(
       loggedInUserData,
@@ -117,10 +113,7 @@ function App() {
     setLoggedInUserData(updatedEmployee);
   };
 
-  // =========================================
   // Employee - Delete Comment
-  // =========================================
-
   const handleDeleteComment = (taskId, commentIndex) => {
     const updatedEmployee = handleEmployeeDeleteComment(
       loggedInUserData,
@@ -133,10 +126,7 @@ function App() {
     setLoggedInUserData(updatedEmployee);
   };
 
-  // =========================================
   // Admin - Add Comment
-  // =========================================
-
   const handleAdminAddComment = (employeeId, taskId, comment) => {
     const updatedEmployee = addAdminComment(employeeId, taskId, comment);
 
@@ -145,16 +135,13 @@ function App() {
     // Green success toast
     toast.success("Admin comment added successfully");
 
-    // Refresh after 5 seconds
+    // Refresh after showing notification
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
 
-  // =========================================
   // Admin - Delete Comment
-  // =========================================
-
   const handleAdminDeleteComment = (employeeId, taskId, commentIndex) => {
     const updatedEmployee = deleteAdminComment(
       employeeId,
@@ -164,22 +151,27 @@ function App() {
 
     if (!updatedEmployee) return;
 
-    // Red error toast
+    // Red notification
     toast.error("Admin comment deleted successfully");
 
-    // Refresh after 5 seconds
+    // Refresh after showing notification
     setTimeout(() => {
       window.location.reload();
     }, 1000);
   };
 
-  // =========================================
   // Loading Screen
-  // =========================================
-
   if (isLoading) {
     return <Loading />;
   }
+
+  // Get username from current URL
+  const currentPathParts = location.pathname.split("/").filter(Boolean);
+
+  const urlUsername = currentPathParts[0];
+
+  // Check if URL username matches logged-in user
+  const isCorrectUser = urlUsername === loggedInUserData?.username;
 
   return (
     <>
@@ -189,10 +181,7 @@ function App() {
       <Header loggedInUserData={loggedInUserData} />
 
       <Routes>
-        {/* ========================================= */}
         {/* Login Route */}
-        {/* ========================================= */}
-
         <Route
           path="/"
           element={
@@ -204,11 +193,7 @@ function App() {
           }
         />
 
-        {/* ========================================= */}
-        {/* Admin - All Tabs / Add Employee */}
-        {/* /addemployee */}
-        {/* ========================================= */}
-
+        {/* Admin - Add Employee / Create Task */}
         <Route
           path="/addemployee"
           element={
@@ -220,58 +205,53 @@ function App() {
           }
         />
 
-        {/* ========================================= */}
-        {/* Dynamic User Landing Page */}
-        {/* Employee: /pallavidey */}
-        {/* Admin: /ambaradmin */}
-        {/* ========================================= */}
-
+        {/* Dynamic User Profile */}
         <Route
           path="/:username"
           element={
-            user === "employee" ? (
-              <EmployeeProfile loggedInUserData={loggedInUserData} />
-            ) : user === "admin" ? (
-              <AdminProfile loggedInUserData={loggedInUserData} />
+            isCorrectUser ? (
+              user === "employee" ? (
+                <EmployeeProfile loggedInUserData={loggedInUserData} />
+              ) : user === "admin" ? (
+                <AdminProfile loggedInUserData={loggedInUserData} />
+              ) : (
+                <Navigate to="/" replace />
+              )
             ) : (
-              <Navigate to="/" replace />
+              <NotFound />
             )
           }
         />
 
-        {/* ========================================= */}
         {/* Dynamic User Taskboard */}
-        {/* Employee: /pallavidey/taskboard */}
-        {/* Admin: /ambaradmin/taskboard */}
-        {/* ========================================= */}
-
         <Route
           path="/:username/taskboard"
           element={
-            user === "employee" ? (
-              <EmployeeDashboard
-                loggedInUserData={loggedInUserData}
-                onTaskStatus={handleTaskStatus}
-                onAddComment={handleAddComment}
-                onDeleteComment={handleDeleteComment}
-              />
-            ) : user === "admin" ? (
-              <AdminDashboard
-                loggedInUserData={loggedInUserData}
-                onAddComment={handleAdminAddComment}
-                onDeleteComment={handleAdminDeleteComment}
-              />
+            isCorrectUser ? (
+              user === "employee" ? (
+                <EmployeeDashboard
+                  loggedInUserData={loggedInUserData}
+                  onTaskStatus={handleTaskStatus}
+                  onAddComment={handleAddComment}
+                  onDeleteComment={handleDeleteComment}
+                />
+              ) : user === "admin" ? (
+                <AdminDashboard
+                  loggedInUserData={loggedInUserData}
+                  onAddComment={handleAdminAddComment}
+                  onDeleteComment={handleAdminDeleteComment}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
             ) : (
-              <Navigate to="/" replace />
+              <NotFound />
             )
           }
         />
 
-        {/* ========================================= */}
         {/* Unknown Routes */}
-        {/* ========================================= */}
-
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
