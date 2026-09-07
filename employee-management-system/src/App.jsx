@@ -1,11 +1,13 @@
 import "./App.css";
 
 import { useContext, useEffect, useState } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 import Login from "./components/Auth/Login";
 import Header from "./components/layout/Header";
+import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
 
 import { AuthContext } from "./context/AuthProvider";
 
@@ -21,6 +23,8 @@ import {
 } from "./utils/taskHandlers";
 
 function App() {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const [loggedInUserData, setLoggedInUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +64,13 @@ function App() {
       setLoggedInUserData(loggedUser.userData);
 
       setIsLoading(false);
+
+      // Navigate based on user role
+      if (loggedUser.role === "employee") {
+        navigate(`/${loggedUser.userData.username}`);
+      } else {
+        navigate("/");
+      }
     }, 1000);
   };
 
@@ -71,28 +82,28 @@ function App() {
 
     if (!updatedEmployee) return;
 
-    // Update React state
     setLoggedInUserData(updatedEmployee);
 
-    // Update localStorage
     updateEmployeeInLocalStorage(updatedEmployee);
   };
 
   // Add Comment
   const handleAddComment = (taskId, comment) => {
+    if (!loggedInUserData) return;
+
     const updatedEmployee = addCommentToTask(loggedInUserData, taskId, comment);
 
     if (!updatedEmployee) return;
 
-    // Update React state
     setLoggedInUserData(updatedEmployee);
 
-    // Update localStorage
     updateEmployeeInLocalStorage(updatedEmployee);
   };
 
   // Delete Comment
   const handleDeleteComment = (taskId, commentIndex) => {
+    if (!loggedInUserData) return;
+
     const updatedEmployee = deleteCommentFromTask(
       loggedInUserData,
       taskId,
@@ -101,10 +112,8 @@ function App() {
 
     if (!updatedEmployee) return;
 
-    // Update React state
     setLoggedInUserData(updatedEmployee);
 
-    // Update localStorage
     updateEmployeeInLocalStorage(updatedEmployee);
   };
 
@@ -117,23 +126,43 @@ function App() {
     <>
       <Header loggedInUserData={loggedInUserData} />
 
-      {/* Login */}
-      {!user && <Login handleLogin={handleLogin} />}
-
-      {/* Admin Dashboard */}
-      {user === "admin" && (
-        <AdminDashboard loggedInUserData={loggedInUserData} />
-      )}
-
-      {/* Employee Dashboard */}
-      {user === "employee" && (
-        <EmployeeDashboard
-          loggedInUserData={loggedInUserData}
-          onTaskStatus={handleTaskStatus}
-          onAddComment={handleAddComment}
-          onDeleteComment={handleDeleteComment}
+      <Routes>
+        {/* Home Route */}
+        <Route
+          path="/"
+          element={
+            !user ? (
+              <Login handleLogin={handleLogin} />
+            ) : user === "admin" ? (
+              <AdminDashboard loggedInUserData={loggedInUserData} />
+            ) : (
+              <Navigate to={`/${loggedInUserData?.username}`} replace />
+            )
+          }
         />
-      )}
+
+        {/* Employee Landing Page */}
+        <Route path="/:username" element={<EmployeeProfile />} />
+
+        {/* Employee Tasks */}
+        <Route
+          path="/:username/tasks"
+          element={
+            <EmployeeDashboard
+              loggedInUserData={loggedInUserData}
+              onTaskStatus={handleTaskStatus}
+              onAddComment={handleAddComment}
+              onDeleteComment={handleDeleteComment}
+            />
+          }
+        />
+
+        {/* Employee Profile */}
+        <Route path="/:username/profile" element={<EmployeeProfile />} />
+
+        {/* Redirect unknown routes */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </>
   );
 }

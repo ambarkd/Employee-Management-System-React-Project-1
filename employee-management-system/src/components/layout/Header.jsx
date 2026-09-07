@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { resetLocalStorage } from "../../utils/LocalStorage";
 
 const Header = ({ loggedInUserData }) => {
@@ -57,7 +58,7 @@ const Header = ({ loggedInUserData }) => {
             onClick={handleReset}
             className="cursor-pointer rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400 transition duration-200 hover:border-amber-500/40 hover:bg-amber-500 hover:text-white active:scale-[0.98]"
           >
-            Reset Data
+            <Link to="/"> Reset Data</Link>
           </button>
 
           {/* Logout */}
@@ -65,7 +66,7 @@ const Header = ({ loggedInUserData }) => {
             onClick={handleLogout}
             className="cursor-pointer rounded-lg border border-red-500/20 bg-red-600/10 px-4 py-2 text-sm font-medium text-red-500 transition duration-200 hover:bg-red-600 hover:text-white active:scale-[0.98]"
           >
-            Log Out
+            <Link to="/"> Log Out</Link>
           </button>
         </div>
       </div>
