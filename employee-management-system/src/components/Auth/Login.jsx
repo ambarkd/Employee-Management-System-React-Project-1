@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FooterAppInfo from "../layout/FooterAppInfo";
 
 function Login({ handleLogin }) {
   const [email, setEmail] = useState("");
@@ -10,13 +11,14 @@ function Login({ handleLogin }) {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-zinc-950 p-6">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden bg-zinc-950 px-5 py-8 pb-72 sm:px-6 sm:pb-60">
       {/* Background Glow Accents */}
       <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-emerald-500/15 blur-[120px]"></div>
+
       <div className="absolute -bottom-20 -right-20 h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px]"></div>
 
       {/* Login Card */}
-      <div className="relative w-full max-w-md rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+      <div className="relative z-10 w-full max-w-md rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
         {/* Subtle Top Border Highlight */}
         <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-emerald-500/50 to-transparent"></div>
 
@@ -58,6 +60,9 @@ function Login({ handleLogin }) {
           </button>
         </form>
       </div>
+
+      {/* Demo Credentials / App Information */}
+      <FooterAppInfo />
     </div>
   );
 }
