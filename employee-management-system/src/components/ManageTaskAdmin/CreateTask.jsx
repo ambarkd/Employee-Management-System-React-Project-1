@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TaskAssigned from "./TaskAssigned";
+import { toast } from "sonner";
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +10,6 @@ const CreateTask = () => {
     category: "",
     priority: "Medium",
   });
-
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const employees = JSON.parse(localStorage.getItem("employees")) || [];
 
@@ -104,18 +102,14 @@ const CreateTask = () => {
     // Save to localStorage
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
 
-    // Show success component
-    setShowSuccess(true);
+    // Show success toast
+    toast.success("Task created successfully");
 
-    // Reload after success message
+    // Reload after 5 seconds
     setTimeout(() => {
       window.location.reload();
-    });
+    }, 1000);
   };
-
-  if (showSuccess) {
-    return <TaskAssigned />;
-  }
 
   return (
     <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">

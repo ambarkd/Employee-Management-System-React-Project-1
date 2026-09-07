@@ -8,6 +8,10 @@ import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
 import Login from "./components/Auth/Login";
 import Header from "./components/layout/Header";
 import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
+import AdminProfile from "./components/AdminProfile/AdminProfile";
+import AllTabs from "./components/ManageTaskAdmin/AllTabs";
+
+import { Toaster, toast } from "sonner";
 
 import { AuthContext } from "./context/AuthProvider";
 
@@ -17,10 +21,15 @@ import { loginUser, restoreLoggedInUser } from "./utils/auth";
 
 import {
   updateTaskStatus,
-  addCommentToTask,
-  deleteCommentFromTask,
   updateEmployeeInLocalStorage,
 } from "./utils/taskHandlers";
+
+import {
+  handleEmployeeAddComment,
+  handleEmployeeDeleteComment,
+  handleAdminAddComment as addAdminComment,
+  handleAdminDeleteComment as deleteAdminComment,
+} from "./utils/commentHandlers";
 
 function App() {
   const navigate = useNavigate();
@@ -31,7 +40,10 @@ function App() {
 
   const authData = useContext(AuthContext);
 
+  // =========================================
   // Restore logged-in user after page refresh
+  // =========================================
+
   useEffect(() => {
     if (!authData) return;
 
@@ -45,7 +57,10 @@ function App() {
     setIsLoading(false);
   }, [authData]);
 
+  // =========================================
   // Login
+  // =========================================
+
   const handleLogin = (email, password) => {
     if (!authData) return;
 
@@ -65,16 +80,15 @@ function App() {
 
       setIsLoading(false);
 
-      // Navigate based on user role
-      if (loggedUser.role === "employee") {
-        navigate(`/${loggedUser.userData.username}`);
-      } else {
-        navigate("/");
-      }
+      // Dynamic route based on username
+      navigate(`/${loggedUser.userData.username}`);
     }, 1000);
   };
 
-  // Update Task Status
+  // =========================================
+  // Employee - Update Task Status
+  // =========================================
+
   const handleTaskStatus = (taskId, status) => {
     if (!loggedInUserData) return;
 
@@ -87,24 +101,28 @@ function App() {
     updateEmployeeInLocalStorage(updatedEmployee);
   };
 
-  // Add Comment
-  const handleAddComment = (taskId, comment) => {
-    if (!loggedInUserData) return;
+  // =========================================
+  // Employee - Add Comment
+  // =========================================
 
-    const updatedEmployee = addCommentToTask(loggedInUserData, taskId, comment);
+  const handleAddComment = (taskId, comment) => {
+    const updatedEmployee = handleEmployeeAddComment(
+      loggedInUserData,
+      taskId,
+      comment,
+    );
 
     if (!updatedEmployee) return;
 
     setLoggedInUserData(updatedEmployee);
-
-    updateEmployeeInLocalStorage(updatedEmployee);
   };
 
-  // Delete Comment
-  const handleDeleteComment = (taskId, commentIndex) => {
-    if (!loggedInUserData) return;
+  // =========================================
+  // Employee - Delete Comment
+  // =========================================
 
-    const updatedEmployee = deleteCommentFromTask(
+  const handleDeleteComment = (taskId, commentIndex) => {
+    const updatedEmployee = handleEmployeeDeleteComment(
       loggedInUserData,
       taskId,
       commentIndex,
@@ -113,54 +131,146 @@ function App() {
     if (!updatedEmployee) return;
 
     setLoggedInUserData(updatedEmployee);
-
-    updateEmployeeInLocalStorage(updatedEmployee);
   };
 
-  // Loading screen
+  // =========================================
+  // Admin - Add Comment
+  // =========================================
+
+  const handleAdminAddComment = (employeeId, taskId, comment) => {
+    const updatedEmployee = addAdminComment(employeeId, taskId, comment);
+
+    if (!updatedEmployee) return;
+
+    // Green success toast
+    toast.success("Admin comment added successfully");
+
+    // Refresh after 5 seconds
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  // =========================================
+  // Admin - Delete Comment
+  // =========================================
+
+  const handleAdminDeleteComment = (employeeId, taskId, commentIndex) => {
+    const updatedEmployee = deleteAdminComment(
+      employeeId,
+      taskId,
+      commentIndex,
+    );
+
+    if (!updatedEmployee) return;
+
+    // Red error toast
+    toast.error("Admin comment deleted successfully");
+
+    // Refresh after 5 seconds
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
+
+  // =========================================
+  // Loading Screen
+  // =========================================
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <>
+      {/* Sonner Toast */}
+      <Toaster position="top-right" theme="dark" richColors />
+
       <Header loggedInUserData={loggedInUserData} />
 
       <Routes>
-        {/* Home Route */}
+        {/* ========================================= */}
+        {/* Login Route */}
+        {/* ========================================= */}
+
         <Route
           path="/"
           element={
             !user ? (
               <Login handleLogin={handleLogin} />
-            ) : user === "admin" ? (
-              <AdminDashboard loggedInUserData={loggedInUserData} />
             ) : (
               <Navigate to={`/${loggedInUserData?.username}`} replace />
             )
           }
         />
 
-        {/* Employee Landing Page */}
-        <Route path="/:username" element={<EmployeeProfile />} />
+        {/* ========================================= */}
+        {/* Admin - All Tabs / Add Employee */}
+        {/* /addemployee */}
+        {/* ========================================= */}
 
-        {/* Employee Tasks */}
         <Route
-          path="/:username/tasks"
+          path="/addemployee"
           element={
-            <EmployeeDashboard
-              loggedInUserData={loggedInUserData}
-              onTaskStatus={handleTaskStatus}
-              onAddComment={handleAddComment}
-              onDeleteComment={handleDeleteComment}
-            />
+            user === "admin" ? (
+              <AllTabs loggedInUserData={loggedInUserData} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
 
-        {/* Employee Profile */}
-        <Route path="/:username/profile" element={<EmployeeProfile />} />
+        {/* ========================================= */}
+        {/* Dynamic User Landing Page */}
+        {/* Employee: /pallavidey */}
+        {/* Admin: /ambaradmin */}
+        {/* ========================================= */}
 
-        {/* Redirect unknown routes */}
+        <Route
+          path="/:username"
+          element={
+            user === "employee" ? (
+              <EmployeeProfile loggedInUserData={loggedInUserData} />
+            ) : user === "admin" ? (
+              <AdminProfile loggedInUserData={loggedInUserData} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+
+        {/* ========================================= */}
+        {/* Dynamic User Taskboard */}
+        {/* Employee: /pallavidey/taskboard */}
+        {/* Admin: /ambaradmin/taskboard */}
+        {/* ========================================= */}
+
+        <Route
+          path="/:username/taskboard"
+          element={
+            user === "employee" ? (
+              <EmployeeDashboard
+                loggedInUserData={loggedInUserData}
+                onTaskStatus={handleTaskStatus}
+                onAddComment={handleAddComment}
+                onDeleteComment={handleDeleteComment}
+              />
+            ) : user === "admin" ? (
+              <AdminDashboard
+                loggedInUserData={loggedInUserData}
+                onAddComment={handleAdminAddComment}
+                onDeleteComment={handleAdminDeleteComment}
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+
+        {/* ========================================= */}
+        {/* Unknown Routes */}
+        {/* ========================================= */}
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

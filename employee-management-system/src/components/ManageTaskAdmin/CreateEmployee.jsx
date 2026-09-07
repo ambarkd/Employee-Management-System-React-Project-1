@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EmployeeAdded from "./EmployeeAdded";
+import { toast } from "sonner";
 
 const CreateEmployee = () => {
   const [formData, setFormData] = useState({
@@ -9,8 +9,6 @@ const CreateEmployee = () => {
     password: "",
     designation: "",
   });
-
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,18 +61,14 @@ const CreateEmployee = () => {
 
     localStorage.setItem("employees", JSON.stringify(updatedEmployees));
 
-    // Show success component
-    setShowSuccess(true);
+    // Show success toast
+    toast.success("Employee added successfully");
 
-    // Reload after success message
+    // Reload after 5 seconds
     setTimeout(() => {
       window.location.reload();
-    });
+    }, 1000);
   };
-
-  if (showSuccess) {
-    return <EmployeeAdded />;
-  }
 
   return (
     <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">

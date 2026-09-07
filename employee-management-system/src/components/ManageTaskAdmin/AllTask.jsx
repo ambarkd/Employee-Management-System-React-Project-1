@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import TaskDetails from "../TaskList/TaskDetails/TaskDetails";
 
-const AllTask = () => {
+const AllTask = ({ onAddComment, onDeleteComment }) => {
   const [employees, setEmployees] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [openEmployee, setOpenEmployee] = useState(null);
 
   useEffect(() => {
@@ -71,12 +72,21 @@ const AllTask = () => {
   };
 
   // Open Task Details
-  if (selectedTask) {
+  if (selectedTask && selectedEmployee) {
     return (
       <TaskDetails
         task={selectedTask}
-        onBack={() => setSelectedTask(null)}
+        onBack={() => {
+          setSelectedTask(null);
+          setSelectedEmployee(null);
+        }}
         userType="admin"
+        onAddComment={(taskId, comment) =>
+          onAddComment(selectedEmployee.id, taskId, comment)
+        }
+        onDeleteComment={(taskId, commentIndex) =>
+          onDeleteComment(selectedEmployee.id, taskId, commentIndex)
+        }
       />
     );
   }
@@ -84,6 +94,12 @@ const AllTask = () => {
   // Open / Close Employee
   const handleEmployeeToggle = (employeeId) => {
     setOpenEmployee((prev) => (prev === employeeId ? null : employeeId));
+  };
+
+  // Open Task
+  const handleOpenTask = (employee, task) => {
+    setSelectedEmployee(employee);
+    setSelectedTask(task);
   };
 
   return (
@@ -229,7 +245,9 @@ const AllTask = () => {
 
                                     {/* View Task */}
                                     <button
-                                      onClick={() => setSelectedTask(task)}
+                                      onClick={() =>
+                                        handleOpenTask(employee, task)
+                                      }
                                       className={`mt-3 w-full cursor-pointer rounded-md border px-2 py-1.5 text-[11px] font-medium transition ${config.badge} hover:brightness-125`}
                                     >
                                       View Task →

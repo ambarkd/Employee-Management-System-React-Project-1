@@ -147,7 +147,7 @@ const EmployeeProfile = () => {
             </p>
 
             <Link
-              to={`/${employee.username}/tasks`}
+              to={`/${employee.username}/taskboard`}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 px-5 py-3 font-semibold text-zinc-950 transition hover:bg-amber-400 active:scale-[0.98]"
             >
               View Tasks
