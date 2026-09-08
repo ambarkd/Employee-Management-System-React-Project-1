@@ -47,9 +47,9 @@ const Header = ({ loggedInUserData }) => {
         )}
 
         {/* Title */}
-        <h1 className="hidden cursor-default bg-linear-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-xl font-extrabold tracking-tight text-transparent transition duration-300 hover:from-purple-400 hover:via-cyan-400 hover:to-emerald-400 sm:block">
+        <h2 className="hidden cursor-default bg-linear-to-r from-emerald-400 via-cyan-400 to-purple-400 bg-clip-text text-xl font-extrabold tracking-tight text-transparent transition duration-300 hover:from-purple-400 hover:via-cyan-400 hover:to-emerald-400 sm:block">
           Employee Management System
-        </h1>
+        </h2>
 
         {/* Actions */}
         <div className="flex items-center gap-2">

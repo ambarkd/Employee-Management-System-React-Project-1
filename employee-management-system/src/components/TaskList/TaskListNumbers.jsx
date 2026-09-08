@@ -7,13 +7,11 @@ const TaskListNumbers = ({ loggedInUserData, taskFilter, setTaskFilter }) => {
     setTaskFilter(null);
   };
 
-  console.log(loggedInUserData);
-
   return (
     <div className="mt-8">
-      <h2 className="mb-10 font-semibold text-zinc-200 text-4xl text-center">
+      <h1 className="mb-10 font-semibold text-zinc-200 text-4xl text-center">
         {loggedInUserData.name.split(" ")[0]}'s Task Board
-      </h2>
+      </h1>
       {/* Task Numbers */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {/* Active Task */}

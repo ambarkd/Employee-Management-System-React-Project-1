@@ -31,9 +31,9 @@ const TaskDetails = ({
       <div className="mb-6">
         <p className="text-sm font-medium text-purple-400">Task Details</p>
 
-        <h2 className="mt-1 text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
           {task.taskTitle}
-        </h2>
+        </h1>
 
         <p className="mt-2 text-sm text-zinc-500">
           Review task information, status and notes.

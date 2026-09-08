@@ -7,7 +7,7 @@ const AdminProfile = ({ loggedInUserData }) => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-950 px-6 text-zinc-100">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-zinc-100">Admin not found</h1>
+          <h2 className="text-2xl font-bold text-zinc-100">Admin not found</h2>
 
           <p className="mt-2 text-sm text-zinc-500">
             The administrator profile you are looking for does not exist.

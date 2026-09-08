@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Outer Rounded Container (bg-purple-600 with border-zinc-900) -->
+  <rect 
+    x="12" 
+    y="12" 
+    width="488" 
+    height="488" 
+    rx="244" 
+    fill="#9333ea" 
+    stroke="#18181b" 
+    stroke-width="24" 
+  />
+
+  <!-- Symbol Group -->
+  <g>
+    <!-- Left Team Member -->
+    <path 
+      d="M 176 216 A 36 36 0 1 0 176 144 A 36 36 0 1 0 176 216 Z 
+         M 112 328 C 112 284 140 256 176 256 C 192 256 206 262 216 272 C 196 292 188 320 188 352 L 112 352 Z" 
+      fill="#f4f4f5" 
+      opacity="0.6" 
+    />
+
+    <!-- Right Team Member -->
+    <path 
+      d="M 336 216 A 36 36 0 1 0 336 144 A 36 36 0 1 0 336 216 Z 
+         M 400 328 C 400 284 372 256 336 256 C 320 256 306 262 296 272 C 316 292 324 320 324 352 L 400 352 Z" 
+      fill="#f4f4f5" 
+      opacity="0.6" 
+    />
+
+    <!-- Center Lead/Employee -->
+    <circle cx="256" cy="160" r="48" fill="#ffffff" />
+    <path d="M 176 352 C 176 280 212 240 256 240 C 300 240 336 280 336 352 Z" fill="#ffffff" />
+
+    <!-- Verification Badge (zinc-900 ring for high contrast against purple background) -->
+    <circle cx="336" cy="336" r="48" fill="#18181b" stroke="#9333ea" stroke-width="8" />
+    
+    <!-- Badge Checkmark -->
+    <path 
+      d="M 316 336 L 330 350 L 358 320" 
+      fill="none" 
+      stroke="#ffffff" 
+      stroke-width="10" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+    />
+  </g>
+</svg>

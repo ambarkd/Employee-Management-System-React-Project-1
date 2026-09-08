@@ -37,9 +37,9 @@ const FooterAppInfo = () => {
           <div className="mb-2 flex items-center justify-center gap-2">
             <span className="text-base">🔑</span>
 
-            <h3 className="text-base font-bold text-zinc-100">
+            <h1 className="text-base font-bold text-red-600">
               Demo Login Credentials
-            </h3>
+            </h1>
           </div>
 
           <p className="text-sm text-zinc-400">
