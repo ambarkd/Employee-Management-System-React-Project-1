@@ -209,7 +209,7 @@ const AllTask = ({ onAddComment, onDeleteComment }) => {
                             </div>
 
                             {/* Tasks */}
-                            <div className="max-h-72 space-y-3 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#3f3f46_transparent]">
+                            <div className="max-h-72 space-y-3 overflow-y-auto pr-1 scrollbar-thin [scrollbar-color:#3f3f46_transparent]">
                               {statusTasks.length > 0 ? (
                                 statusTasks.map((task) => (
                                   <div
